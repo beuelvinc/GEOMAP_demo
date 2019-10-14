@@ -1,0 +1,304 @@
+{% extends "base.html" %}
+
+{% block style %}
+{% endblock style %}
+
+{% block content %}
+
+<div id='map' style='width: 100%; height: 600px;'></div>
+<br>
+<button id='fly' class='btn btn-block btn-success'>Fly</button>
+
+{% endblock %}
+{% block data %}
+    <section class="ftco-section">
+    	<div class="container">
+
+    		<div class="row place-data">
+
+
+
+          </div>
+
+
+          {% comment %}
+
+
+    			 <div class="col-md-6 col-lg-3 ftco-animate">
+    				<div class="project">
+    					<div class="img">
+		    				<img src="images/destination-4.jpg" class="img-fluid" alt="Colorlib Template">
+	    				</div>
+	    				<div class="text">
+	    					<span>15 Days Tour</span>
+	    					<h3><a href="project.html">Gurtnellen, Swetzerland</a></h3>
+
+	    				</div>
+	    				<a href="images/destination-4.jpg" class="icon image-popup d-flex justify-content-center align-items-center">
+	    					<span class="icon-expand"></span>
+	    				</a>
+    				</div>
+    			</div> {% endcomment %}
+    		</div>
+    	</div>
+
+    </section>
+
+{% endblock  %}
+
+
+
+
+{% block script %}
+<script>
+    let monument=[49.896952,40.384266]
+    mapboxgl.accessToken = 'pk.eyJ1IjoiYmV1ZWx2aW5jIiwiYSI6ImNrMW1mbThsMDAwOW0zbHFxeDJ6YzFwcWsifQ.Jx5rtZnYn0wDLQeIUQ07kA';
+        var map = new mapboxgl.Map({
+        container: 'map',
+        style: 'mapbox://styles/mapbox/streets-v11',
+        center: [49.896952,40.384266],
+        zoom: 10
+    });
+    map.addControl(new mapboxgl.GeolocateControl({
+        positionOptions: {
+        enableHighAccuracy: true
+        },
+        trackUserLocation: true
+    }));
+
+let cordinates=
+{
+  1:[49.8461478000000,40.3914020000000],
+  2:[49.8961478000000,40.4914020000000],
+  3:[49.5960592, 40.5858022],
+  4:[48.5960592,40.5858022]
+}
+map.on('load', function() {
+map.addSource("source_circle_500", {
+    "type": "geojson",
+    "data": {
+      "type": "FeatureCollection",
+      "features": [
+       {
+         "type": "Feature",
+         "properties": {},
+         "geometry": {
+           "type": "Point",
+           "coordinates": [
+             49.8461478000000 ,
+             40.3914020000000
+           ]
+         }
+ }
+]
+    }
+});
+
+const metersToPixelsAtMaxZoom = (meters, latitude) =>
+  meters / 0.075 / Math.cos(latitude * Math.PI / 180)
+map.addLayer({
+    "id": "circle500",
+    "type": "circle",
+    "source": "source_circle_500",
+    "paint": {
+        "circle-radius": {
+        stops: [
+          [0, 0],
+          [20, metersToPixelsAtMaxZoom(4500, 40)]
+        ],
+        base: 2
+      },
+        "circle-color": "rgb(0, 0, 0)",
+        "circle-opacity": 0.4
+    }
+});
+
+map.addSource("source_circle_501", {
+    "type": "geojson",
+    "data": {
+      "type": "FeatureCollection",
+      "features": [
+       {
+         "type": "Feature",
+         "properties": {},
+         "geometry": {
+           "type": "Point",
+           "coordinates": [
+             49.8961478000000 ,
+             40.4914020000000
+           ]
+         }
+ }
+]
+    }
+});
+
+
+map.addLayer({
+    "id": "circle501",
+    "type": "circle",
+    "source": "source_circle_501",
+    "paint": {
+        "circle-radius": {
+        stops: [
+          [0, 0],
+          [20, metersToPixelsAtMaxZoom(4500, 40)]
+        ],
+        base: 2
+      },
+        "circle-color": "rgb(0, 0, 0)",
+        "circle-opacity": 0.4
+    }
+});
+
+
+
+
+map.addSource("source_circle_502", {
+    "type": "geojson",
+    "data": {
+      "type": "FeatureCollection",
+      "features": [
+       {
+         "type": "Feature",
+         "properties": {},
+         "geometry": {
+           "type": "Point",
+           "coordinates": [
+             49.5960592,
+             40.5858022
+           ]
+         }
+ }
+]
+    }
+});
+
+
+map.addLayer({
+    "id": "circle502",
+    "type": "circle",
+    "source": "source_circle_502",
+    "paint": {
+        "circle-radius": {
+        stops: [
+          [0, 0],
+          [20, metersToPixelsAtMaxZoom(4500, 40)]
+        ],
+        base: 2
+      },
+        "circle-color": "rgb(0, 0, 0)",
+        "circle-opacity": 0.4
+    }
+
+})
+
+
+map.addSource("source_circle_503", {
+    "type": "geojson",
+    "data": {
+      "type": "FeatureCollection",
+      "features": [
+       {
+         "type": "Feature",
+         "properties": {},
+         "geometry": {
+           "type": "Point",
+           "coordinates": [
+             48.5960592,
+             40.5858022
+           ]
+         }
+ }
+]
+    }
+});
+
+
+map.addLayer({
+    "id": "circle503",
+    "type": "circle",
+    "source": "source_circle_503",
+    "paint": {
+        "circle-radius": {
+        stops: [
+          [0, 0],
+          [20, metersToPixelsAtMaxZoom(4500, 40)]
+        ],
+        base: 2
+      },
+        "circle-color": "rgb(0, 0, 0)",
+        "circle-opacity": 0.4
+    }
+
+})
+
+})
+
+      {% for c in  context %}
+          new mapboxgl.Marker()
+          //you are {{c.name}} from {{c.country.name}}
+          .setLngLat([{{c.lng}},{{c.lat}}])
+          .setPopup(new mapboxgl.Popup({ offset: 25 })
+          .setHTML(`
+            <div>
+                  <img class='ml-5 mb-2' width=64 src='{{c.image.url}}'>
+                  <h6> it is {{c.name}} from {{c.country.name}} </h6>
+
+            </div>`))
+          .addTo(map);
+      {% endfor %}
+
+
+      document.getElementById('fly').addEventListener('click', function () {
+      // Fly to a random location by offsetting the point -74.50, 40
+      // by up to 5 degrees.
+
+          map.flyTo({
+              center: cordinates[Math.floor(Math.random()*4+1)]
+          });
+
+          setTimeout(function(){ console.log(map.getCenter());
+            let lng = map.getCenter().lng
+            let lat = map.getCenter().lat
+            $(".place-data").html("")
+
+            {% for c in  context %}
+           console.log(map.getCenter().lng-{{c.lng}})
+           console.log(map.getCenter().lat-{{c.lat}})
+            if(Math.abs(map.getCenter().lng-{{c.lng}})<0.9 && Math.abs( map.getCenter().lat-{{c.lat}})<0.04 ){
+                  $(".place-data").append(
+                    `
+                    <div style='widht:100%' class="col-md-4 card">
+                    <img class="card-img-top" width=300 height=300 src="{{c.image.url}}" alt="Card image cap">
+                    <div class="card-body">
+                      <h5 class="card-title">{{c.name}}</h5>
+                      <p class="card-text">{{c.name}} is from {{c.country.name | capfirst }}</p>
+                      <p>Age : 25</p>
+                      <hr>
+                      <p>Hobbies:</p>
+                      <ul>
+                      	<li>Cycling</li>
+                      	<li>Swimming</li>
+                      	<li>Gaming</li>
+                      </ul>
+
+                        </div>
+                </div>
+                <br><br>
+                  `)
+                  }
+                    {% endfor %}
+
+
+           }, 1500);
+
+
+      });
+
+
+
+
+
+</script>
+{% endblock script %}

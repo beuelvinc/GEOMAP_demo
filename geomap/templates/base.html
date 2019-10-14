@@ -1,0 +1,45 @@
+{% extends 'baser.html' %}
+<!-- <!DOCTYPE html> -->
+{% load static %}
+
+{% block body %}
+<!-- <html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>Document</title> -->
+
+</head>
+{% block style %}
+{% endblock style %}
+
+
+        <!-- Page Content -->
+        <div id="page-content-wrapper">
+
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12 ">
+                       {% block content %}
+
+					   			 			{% endblock content %}
+                    </div>
+										{% block data %}
+
+										{% endblock %}
+                </div>
+            </div>
+        </div>
+        <!-- /#page-content-wrapper -->
+
+
+    <!-- /#wrapper -->
+
+
+{% block script %}
+
+{% endblock script %}
+{% endblock body %}
+<!-- </body>
+</html> -->
